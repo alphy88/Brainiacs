@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../one/ft_search.c"
+//#include "../one/ft_search.c"
+#include "dataclass.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -17,5 +18,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_pressed()
 {
-
+    DataClass myClass;
+    myClass.PrintSomething();
 }

@@ -15,10 +15,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ../one/ft_add.c \
-    ../one/ft_encrypt.c \
-    ../one/ft_search.c \
-    ../one/main.c
+##    ../one/ft_add.c \
+##    ../one/ft_encrypt.c \
+##    ../one/ft_search.c \
+##    ../one/main.c
+    dataclass.cpp
 
 INCLUDEPATH += /usr/include/c++/4.8/
 INCLUDEPATH += /usr/include/x86_64-linux-gnu/c++/4.8/
@@ -26,6 +27,7 @@ QMAKE_CXXFLAGS += -std=c++0x
 LIBS += -L/opt/local/lib
 CONFIG += c++11
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    dataclass.h
 
 FORMS    += mainwindow.ui
