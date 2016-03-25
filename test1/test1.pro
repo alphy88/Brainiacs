@@ -19,7 +19,10 @@ SOURCES += main.cpp\
 ##    ../one/ft_encrypt.c \
 ##    ../one/ft_search.c \
 ##    ../one/main.c
-    dataclass.cpp
+    dataclass.cpp \
+    ft_add.cpp \
+    ft_encrypt.cpp \
+    ft_stuff.cpp
 
 INCLUDEPATH += /usr/include/c++/4.8/
 INCLUDEPATH += /usr/include/x86_64-linux-gnu/c++/4.8/

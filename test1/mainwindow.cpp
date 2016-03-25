@@ -16,8 +16,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_pressed()
+void MainWindow::on_pushButton_clicked()
 {
-    DataClass myClass;
-    myClass.PrintSomething();
+
 }
