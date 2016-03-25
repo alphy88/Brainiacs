@@ -48,7 +48,7 @@ void	ft_print()
 	}
 }
 
-bool	ft_search(char *s1, char *s2)
+bool	ft_search(string s1, string s2)
 {
 	string	user(encryptDecrypt(s1));
 	string	pass(encryptDecrypt(s2));
