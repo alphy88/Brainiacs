@@ -18,14 +18,12 @@ map	<string, string> m;
 
 string	encryptDecrypt(string toEncrypt);
 
-void	ft_add(map<string, string> m);
+void	ft_add(map<string, string> m, string user, string pass);
 
 void	ft_split(string s)
 {
-	const char	*c;
-	size_t		i, a;
+    size_t		a;
 
-	i = 0;
 	a = s.find('+');
 	m.insert(make_pair(s.substr(0, a), s.substr(a + 1)));
 }
@@ -48,7 +46,7 @@ void	ft_print()
 	}
 }
 
-bool	ft_search(string s1, string s2)
+void	ft_search(string s1, string s2)
 {
 	string	user(encryptDecrypt(s1));
 	string	pass(encryptDecrypt(s2));

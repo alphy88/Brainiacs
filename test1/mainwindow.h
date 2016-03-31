@@ -20,6 +20,8 @@ private slots:
 
     void on_print_clicked();
 
+    void on_Add_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

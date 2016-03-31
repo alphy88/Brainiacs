@@ -34,3 +34,6 @@ HEADERS  += mainwindow.h \
     dataclass.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    test.txt
