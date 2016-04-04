@@ -18,7 +18,7 @@ map	<string, string> m;
 
 string	encryptDecrypt(string toEncrypt);
 
-void	ft_add(map<string, string> m, string user, string pass);
+void	ft_add(map<string, string>& m, string user, string pass);
 
 void	ft_split(string s)
 {

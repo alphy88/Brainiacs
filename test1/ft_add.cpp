@@ -11,7 +11,7 @@ using namespace std;
 
 string  encryptDecrypt(string toEncrypt);
 
-void	ft_add(map<string, string> m, string user, string pass)
+void	ft_add(map<string, string>& m, string user, string pass)
 {
     m.insert(make_pair(encryptDecrypt(user),encryptDecrypt(pass)));
 	ofstream out("test.txt", ofstream::app);
