@@ -1,20 +1,35 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include "ugl.h"
 #include "dataclass.h"
-#include "ft_stuff.cpp"
-using namespace std;
+
+extern map <string, string> m;
+extern sqlite3 *db;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ft_m();
+      char *zErrMsg = 0;
+      int rc;
+      db = NULL;
+      rc = sqlite3_open("test.db", &db);
+
+      if( rc ){
+         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+         exit(0);
+      }else{
+         fprintf(stderr, "Opened database successfully\n");
+         ft_definetable();
+      }
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    sqlite3_close(db);
 }
 
 
@@ -46,7 +61,7 @@ void MainWindow::on_Add_clicked()
         ui->error->setText("Username must not contain the ` character");
     else
     {
-             ft_add(m, user, pass);
+            // ft_add(m, user, pass);
              ui->error->setText("User created !");
     }
 }

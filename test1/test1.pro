@@ -20,18 +20,19 @@ SOURCES += main.cpp\
 ##    ../one/ft_search.c \
 ##    ../one/main.c
     dataclass.cpp \
-    ft_add.cpp \
     ft_encrypt.cpp \
     ft_stuff.cpp
 
 INCLUDEPATH += /usr/include/c++/4.8/
 INCLUDEPATH += /usr/include/x86_64-linux-gnu/c++/4.8/
 QMAKE_CXXFLAGS += -std=c++0x
-LIBS += -L/opt/local/lib
+LIBS += -L/opt/local/lib \
+        -lsqlite3
 CONFIG += c++11
 
 HEADERS  += mainwindow.h \
-    dataclass.h
+    dataclass.h \
+    ugl.h
 
 FORMS    += mainwindow.ui
 

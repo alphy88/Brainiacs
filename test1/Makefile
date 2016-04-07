@@ -36,7 +36,7 @@ DISTNAME      = test11.0.0
 DISTDIR = /home/tudyrusy/rep/test1/.tmp/test11.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/tudyrusy/Qt/5.5/gcc_64 -Wl,-rpath,/home/tudyrusy/Qt/5.5/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/opt/local/lib -L/home/tudyrusy/Qt/5.5/gcc_64/lib -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/opt/local/lib -lsqlite3 -L/home/tudyrusy/Qt/5.5/gcc_64/lib -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -51,13 +51,13 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		mainwindow.cpp \
 		dataclass.cpp \
-		ft_add.cpp \
-		ft_encrypt.cpp moc_mainwindow.cpp
+		ft_encrypt.cpp \
+		ft_stuff.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		dataclass.o \
-		ft_add.o \
 		ft_encrypt.o \
+		ft_stuff.o \
 		moc_mainwindow.o
 DIST          = test.txt \
 		../../Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -197,11 +197,12 @@ DIST          = test.txt \
 		../../Qt/5.5/gcc_64/mkspecs/features/yacc.prf \
 		../../Qt/5.5/gcc_64/mkspecs/features/lex.prf \
 		test1.pro mainwindow.h \
-		dataclass.h main.cpp \
+		dataclass.h \
+		ugl.h main.cpp \
 		mainwindow.cpp \
 		dataclass.cpp \
-		ft_add.cpp \
-		ft_encrypt.cpp
+		ft_encrypt.cpp \
+		ft_stuff.cpp
 QMAKE_TARGET  = test1
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = test1
@@ -527,8 +528,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h dataclass.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp dataclass.cpp ft_add.cpp ft_encrypt.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h dataclass.h ugl.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp dataclass.cpp ft_encrypt.cpp ft_stuff.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -1684,9 +1685,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt/5.5/gcc_64/include/QtWidgets/QToolBar \
 		../../Qt/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
 		../../Qt/5.5/gcc_64/include/QtWidgets/QWidget \
-		dataclass.h \
-		ft_stuff.cpp \
-		/usr/include/c++/4.8/iostream
+		ugl.h \
+		dataclass.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 dataclass.o: dataclass.cpp dataclass.h \
@@ -1788,7 +1788,105 @@ dataclass.o: dataclass.cpp dataclass.h \
 		/usr/include/c++/4.8/bits/istream.tcc
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dataclass.o dataclass.cpp
 
-ft_add.o: ft_add.cpp /usr/include/c++/4.8/iostream \
+ft_encrypt.o: ft_encrypt.cpp /usr/include/c++/4.8/iostream \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
+		/usr/include/c++/4.8/ostream \
+		/usr/include/c++/4.8/ios \
+		/usr/include/c++/4.8/iosfwd \
+		/usr/include/c++/4.8/bits/stringfwd.h \
+		/usr/include/c++/4.8/bits/memoryfwd.h \
+		/usr/include/c++/4.8/bits/postypes.h \
+		/usr/include/c++/4.8/cwchar \
+		/usr/include/c++/4.8/exception \
+		/usr/include/c++/4.8/bits/atomic_lockfree_defines.h \
+		/usr/include/c++/4.8/bits/exception_ptr.h \
+		/usr/include/c++/4.8/bits/exception_defines.h \
+		/usr/include/c++/4.8/bits/nested_exception.h \
+		/usr/include/c++/4.8/bits/c++0x_warning.h \
+		/usr/include/c++/4.8/bits/char_traits.h \
+		/usr/include/c++/4.8/bits/stl_algobase.h \
+		/usr/include/c++/4.8/bits/functexcept.h \
+		/usr/include/c++/4.8/bits/cpp_type_traits.h \
+		/usr/include/c++/4.8/ext/type_traits.h \
+		/usr/include/c++/4.8/ext/numeric_traits.h \
+		/usr/include/c++/4.8/bits/stl_pair.h \
+		/usr/include/c++/4.8/bits/move.h \
+		/usr/include/c++/4.8/bits/concept_check.h \
+		/usr/include/c++/4.8/bits/boost_concept_check.h \
+		/usr/include/c++/4.8/bits/stl_iterator_base_types.h \
+		/usr/include/c++/4.8/type_traits \
+		/usr/include/c++/4.8/bits/stl_iterator_base_funcs.h \
+		/usr/include/c++/4.8/debug/debug.h \
+		/usr/include/c++/4.8/debug/macros.h \
+		/usr/include/c++/4.8/debug/functions.h \
+		/usr/include/c++/4.8/debug/formatter.h \
+		/usr/include/c++/4.8/typeinfo \
+		/usr/include/c++/4.8/bits/hash_bytes.h \
+		/usr/include/c++/4.8/bits/stl_iterator.h \
+		/usr/include/c++/4.8/parallel/algobase.h \
+		/usr/include/c++/4.8/parallel/base.h \
+		/usr/include/c++/4.8/bits/stl_function.h \
+		/usr/include/c++/4.8/backward/binders.h \
+		/usr/include/c++/4.8/parallel/features.h \
+		/usr/include/c++/4.8/parallel/basic_iterator.h \
+		/usr/include/c++/4.8/parallel/parallel.h \
+		/usr/include/c++/4.8/parallel/compiletime_settings.h \
+		/usr/include/c++/4.8/cstdio \
+		/usr/include/c++/4.8/parallel/types.h \
+		/usr/include/c++/4.8/cstdlib \
+		/usr/include/c++/4.8/limits \
+		/usr/include/c++/4.8/tr1/cstdint \
+		/usr/include/c++/4.8/parallel/tags.h \
+		/usr/include/c++/4.8/parallel/settings.h \
+		/usr/include/c++/4.8/parallel/algorithmfwd.h \
+		/usr/include/c++/4.8/parallel/find.h \
+		/usr/include/c++/4.8/parallel/compatibility.h \
+		/usr/include/c++/4.8/parallel/equally_split.h \
+		/usr/include/c++/4.8/parallel/find_selectors.h \
+		/usr/include/c++/4.8/cstdint \
+		/usr/include/c++/4.8/bits/localefwd.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h \
+		/usr/include/c++/4.8/clocale \
+		/usr/include/c++/4.8/cctype \
+		/usr/include/c++/4.8/bits/ios_base.h \
+		/usr/include/c++/4.8/ext/atomicity.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h \
+		/usr/include/c++/4.8/bits/locale_classes.h \
+		/usr/include/c++/4.8/string \
+		/usr/include/c++/4.8/bits/allocator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h \
+		/usr/include/c++/4.8/ext/new_allocator.h \
+		/usr/include/c++/4.8/new \
+		/usr/include/c++/4.8/bits/ostream_insert.h \
+		/usr/include/c++/4.8/bits/cxxabi_forced.h \
+		/usr/include/c++/4.8/bits/range_access.h \
+		/usr/include/c++/4.8/bits/basic_string.h \
+		/usr/include/c++/4.8/initializer_list \
+		/usr/include/c++/4.8/ext/string_conversions.h \
+		/usr/include/c++/4.8/cerrno \
+		/usr/include/c++/4.8/bits/functional_hash.h \
+		/usr/include/c++/4.8/bits/basic_string.tcc \
+		/usr/include/c++/4.8/bits/locale_classes.tcc \
+		/usr/include/c++/4.8/streambuf \
+		/usr/include/c++/4.8/bits/streambuf.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.h \
+		/usr/include/c++/4.8/bits/locale_facets.h \
+		/usr/include/c++/4.8/cwctype \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h \
+		/usr/include/c++/4.8/bits/streambuf_iterator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h \
+		/usr/include/c++/4.8/bits/locale_facets.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.tcc \
+		/usr/include/c++/4.8/bits/ostream.tcc \
+		/usr/include/c++/4.8/istream \
+		/usr/include/c++/4.8/bits/istream.tcc
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ft_encrypt.o ft_encrypt.cpp
+
+ft_stuff.o: ft_stuff.cpp /usr/include/c++/4.8/iostream \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
@@ -1889,6 +1987,7 @@ ft_add.o: ft_add.cpp /usr/include/c++/4.8/iostream \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
 		/usr/include/c++/4.8/bits/fstream.tcc \
+		ugl.h \
 		/usr/include/c++/4.8/map \
 		/usr/include/c++/4.8/bits/stl_tree.h \
 		/usr/include/c++/4.8/bits/alloc_traits.h \
@@ -1960,105 +2059,7 @@ ft_add.o: ft_add.cpp /usr/include/c++/4.8/iostream \
 		/usr/include/c++/4.8/profile/impl/profiler_list_to_slist.h \
 		/usr/include/c++/4.8/profile/impl/profiler_list_to_vector.h \
 		/usr/include/c++/4.8/profile/multimap.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ft_add.o ft_add.cpp
-
-ft_encrypt.o: ft_encrypt.cpp /usr/include/c++/4.8/iostream \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
-		/usr/include/c++/4.8/ostream \
-		/usr/include/c++/4.8/ios \
-		/usr/include/c++/4.8/iosfwd \
-		/usr/include/c++/4.8/bits/stringfwd.h \
-		/usr/include/c++/4.8/bits/memoryfwd.h \
-		/usr/include/c++/4.8/bits/postypes.h \
-		/usr/include/c++/4.8/cwchar \
-		/usr/include/c++/4.8/exception \
-		/usr/include/c++/4.8/bits/atomic_lockfree_defines.h \
-		/usr/include/c++/4.8/bits/exception_ptr.h \
-		/usr/include/c++/4.8/bits/exception_defines.h \
-		/usr/include/c++/4.8/bits/nested_exception.h \
-		/usr/include/c++/4.8/bits/c++0x_warning.h \
-		/usr/include/c++/4.8/bits/char_traits.h \
-		/usr/include/c++/4.8/bits/stl_algobase.h \
-		/usr/include/c++/4.8/bits/functexcept.h \
-		/usr/include/c++/4.8/bits/cpp_type_traits.h \
-		/usr/include/c++/4.8/ext/type_traits.h \
-		/usr/include/c++/4.8/ext/numeric_traits.h \
-		/usr/include/c++/4.8/bits/stl_pair.h \
-		/usr/include/c++/4.8/bits/move.h \
-		/usr/include/c++/4.8/bits/concept_check.h \
-		/usr/include/c++/4.8/bits/boost_concept_check.h \
-		/usr/include/c++/4.8/bits/stl_iterator_base_types.h \
-		/usr/include/c++/4.8/type_traits \
-		/usr/include/c++/4.8/bits/stl_iterator_base_funcs.h \
-		/usr/include/c++/4.8/debug/debug.h \
-		/usr/include/c++/4.8/debug/macros.h \
-		/usr/include/c++/4.8/debug/functions.h \
-		/usr/include/c++/4.8/debug/formatter.h \
-		/usr/include/c++/4.8/typeinfo \
-		/usr/include/c++/4.8/bits/hash_bytes.h \
-		/usr/include/c++/4.8/bits/stl_iterator.h \
-		/usr/include/c++/4.8/parallel/algobase.h \
-		/usr/include/c++/4.8/parallel/base.h \
-		/usr/include/c++/4.8/bits/stl_function.h \
-		/usr/include/c++/4.8/backward/binders.h \
-		/usr/include/c++/4.8/parallel/features.h \
-		/usr/include/c++/4.8/parallel/basic_iterator.h \
-		/usr/include/c++/4.8/parallel/parallel.h \
-		/usr/include/c++/4.8/parallel/compiletime_settings.h \
-		/usr/include/c++/4.8/cstdio \
-		/usr/include/c++/4.8/parallel/types.h \
-		/usr/include/c++/4.8/cstdlib \
-		/usr/include/c++/4.8/limits \
-		/usr/include/c++/4.8/tr1/cstdint \
-		/usr/include/c++/4.8/parallel/tags.h \
-		/usr/include/c++/4.8/parallel/settings.h \
-		/usr/include/c++/4.8/parallel/algorithmfwd.h \
-		/usr/include/c++/4.8/parallel/find.h \
-		/usr/include/c++/4.8/parallel/compatibility.h \
-		/usr/include/c++/4.8/parallel/equally_split.h \
-		/usr/include/c++/4.8/parallel/find_selectors.h \
-		/usr/include/c++/4.8/cstdint \
-		/usr/include/c++/4.8/bits/localefwd.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h \
-		/usr/include/c++/4.8/clocale \
-		/usr/include/c++/4.8/cctype \
-		/usr/include/c++/4.8/bits/ios_base.h \
-		/usr/include/c++/4.8/ext/atomicity.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h \
-		/usr/include/c++/4.8/bits/locale_classes.h \
-		/usr/include/c++/4.8/string \
-		/usr/include/c++/4.8/bits/allocator.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h \
-		/usr/include/c++/4.8/ext/new_allocator.h \
-		/usr/include/c++/4.8/new \
-		/usr/include/c++/4.8/bits/ostream_insert.h \
-		/usr/include/c++/4.8/bits/cxxabi_forced.h \
-		/usr/include/c++/4.8/bits/range_access.h \
-		/usr/include/c++/4.8/bits/basic_string.h \
-		/usr/include/c++/4.8/initializer_list \
-		/usr/include/c++/4.8/ext/string_conversions.h \
-		/usr/include/c++/4.8/cerrno \
-		/usr/include/c++/4.8/bits/functional_hash.h \
-		/usr/include/c++/4.8/bits/basic_string.tcc \
-		/usr/include/c++/4.8/bits/locale_classes.tcc \
-		/usr/include/c++/4.8/streambuf \
-		/usr/include/c++/4.8/bits/streambuf.tcc \
-		/usr/include/c++/4.8/bits/basic_ios.h \
-		/usr/include/c++/4.8/bits/locale_facets.h \
-		/usr/include/c++/4.8/cwctype \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h \
-		/usr/include/c++/4.8/bits/streambuf_iterator.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h \
-		/usr/include/c++/4.8/bits/locale_facets.tcc \
-		/usr/include/c++/4.8/bits/basic_ios.tcc \
-		/usr/include/c++/4.8/bits/ostream.tcc \
-		/usr/include/c++/4.8/istream \
-		/usr/include/c++/4.8/bits/istream.tcc
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ft_encrypt.o ft_encrypt.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ft_stuff.o ft_stuff.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
