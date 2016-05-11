@@ -21,7 +21,8 @@ SOURCES += main.cpp\
 ##    ../one/main.c
     dataclass.cpp \
     ft_encrypt.cpp \
-    ft_stuff.cpp
+    ft_stuff.cpp \
+    form2.cpp
 
 INCLUDEPATH += /usr/include/c++/4.8/
 INCLUDEPATH += /usr/include/x86_64-linux-gnu/c++/4.8/
@@ -32,9 +33,12 @@ CONFIG += c++11
 
 HEADERS  += mainwindow.h \
     dataclass.h \
-    ugl.h
+    ugl.h \
+    modelviewdialog.h \
+    form2.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    form2.ui
 
 DISTFILES += \
     test.txt

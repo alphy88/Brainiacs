@@ -52,13 +52,17 @@ SOURCES       = main.cpp \
 		mainwindow.cpp \
 		dataclass.cpp \
 		ft_encrypt.cpp \
-		ft_stuff.cpp moc_mainwindow.cpp
+		ft_stuff.cpp \
+		form2.cpp moc_mainwindow.cpp \
+		moc_form2.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		dataclass.o \
 		ft_encrypt.o \
 		ft_stuff.o \
-		moc_mainwindow.o
+		form2.o \
+		moc_mainwindow.o \
+		moc_form2.o
 DIST          = test.txt \
 		../../Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.5/gcc_64/mkspecs/common/unix.conf \
@@ -198,11 +202,14 @@ DIST          = test.txt \
 		../../Qt/5.5/gcc_64/mkspecs/features/lex.prf \
 		test1.pro mainwindow.h \
 		dataclass.h \
-		ugl.h main.cpp \
+		ugl.h \
+		modelviewdialog.h \
+		form2.h main.cpp \
 		mainwindow.cpp \
 		dataclass.cpp \
 		ft_encrypt.cpp \
-		ft_stuff.cpp
+		ft_stuff.cpp \
+		form2.cpp
 QMAKE_TARGET  = test1
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = test1
@@ -230,7 +237,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_form2.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: test1.pro ../../Qt/5.5/gcc_64/mkspecs/linux-g++/qmake.conf ../../Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -528,9 +535,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h dataclass.h ugl.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp dataclass.cpp ft_encrypt.cpp ft_stuff.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h dataclass.h ugl.h modelviewdialog.h form2.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp dataclass.cpp ft_encrypt.cpp ft_stuff.cpp form2.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.ui form2.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -553,9 +560,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_form2.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_form2.cpp
 moc_mainwindow.cpp: ../../Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		../../Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -908,13 +915,365 @@ moc_mainwindow.cpp: ../../Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		mainwindow.h
 	/home/tudyrusy/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/tudyrusy/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tudyrusy/rep/test1 -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/home/tudyrusy/Qt/5.5/gcc_64/include -I/home/tudyrusy/Qt/5.5/gcc_64/include/QtWidgets -I/home/tudyrusy/Qt/5.5/gcc_64/include/QtGui -I/home/tudyrusy/Qt/5.5/gcc_64/include/QtCore mainwindow.h -o moc_mainwindow.cpp
 
+moc_form2.cpp: ../../Qt/5.5/gcc_64/include/QtWidgets/QWidget \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/usr/include/c++/4.8/cstddef \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/usr/include/c++/4.8/utility \
+		/usr/include/c++/4.8/bits/stl_relops.h \
+		/usr/include/c++/4.8/bits/stl_pair.h \
+		/usr/include/c++/4.8/bits/move.h \
+		/usr/include/c++/4.8/bits/concept_check.h \
+		/usr/include/c++/4.8/bits/boost_concept_check.h \
+		/usr/include/c++/4.8/bits/stl_iterator_base_types.h \
+		/usr/include/c++/4.8/type_traits \
+		/usr/include/c++/4.8/bits/c++0x_warning.h \
+		/usr/include/c++/4.8/initializer_list \
+		/usr/include/c++/4.8/algorithm \
+		/usr/include/c++/4.8/bits/stl_algobase.h \
+		/usr/include/c++/4.8/bits/functexcept.h \
+		/usr/include/c++/4.8/bits/exception_defines.h \
+		/usr/include/c++/4.8/bits/cpp_type_traits.h \
+		/usr/include/c++/4.8/ext/type_traits.h \
+		/usr/include/c++/4.8/ext/numeric_traits.h \
+		/usr/include/c++/4.8/bits/stl_iterator_base_funcs.h \
+		/usr/include/c++/4.8/debug/debug.h \
+		/usr/include/c++/4.8/debug/macros.h \
+		/usr/include/c++/4.8/debug/functions.h \
+		/usr/include/c++/4.8/debug/formatter.h \
+		/usr/include/c++/4.8/typeinfo \
+		/usr/include/c++/4.8/exception \
+		/usr/include/c++/4.8/bits/atomic_lockfree_defines.h \
+		/usr/include/c++/4.8/bits/exception_ptr.h \
+		/usr/include/c++/4.8/bits/nested_exception.h \
+		/usr/include/c++/4.8/bits/hash_bytes.h \
+		/usr/include/c++/4.8/bits/stl_iterator.h \
+		/usr/include/c++/4.8/parallel/algobase.h \
+		/usr/include/c++/4.8/parallel/base.h \
+		/usr/include/c++/4.8/bits/stl_function.h \
+		/usr/include/c++/4.8/backward/binders.h \
+		/usr/include/c++/4.8/parallel/features.h \
+		/usr/include/c++/4.8/parallel/basic_iterator.h \
+		/usr/include/c++/4.8/parallel/parallel.h \
+		/usr/include/c++/4.8/parallel/compiletime_settings.h \
+		/usr/include/c++/4.8/cstdio \
+		/usr/include/c++/4.8/parallel/types.h \
+		/usr/include/c++/4.8/cstdlib \
+		/usr/include/c++/4.8/limits \
+		/usr/include/c++/4.8/tr1/cstdint \
+		/usr/include/c++/4.8/parallel/tags.h \
+		/usr/include/c++/4.8/parallel/settings.h \
+		/usr/include/c++/4.8/parallel/algorithmfwd.h \
+		/usr/include/c++/4.8/parallel/find.h \
+		/usr/include/c++/4.8/parallel/compatibility.h \
+		/usr/include/c++/4.8/parallel/equally_split.h \
+		/usr/include/c++/4.8/parallel/find_selectors.h \
+		/usr/include/c++/4.8/bits/stl_algo.h \
+		/usr/include/c++/4.8/bits/algorithmfwd.h \
+		/usr/include/c++/4.8/bits/stl_heap.h \
+		/usr/include/c++/4.8/bits/stl_tempbuf.h \
+		/usr/include/c++/4.8/bits/stl_construct.h \
+		/usr/include/c++/4.8/new \
+		/usr/include/c++/4.8/ext/alloc_traits.h \
+		/usr/include/c++/4.8/bits/alloc_traits.h \
+		/usr/include/c++/4.8/bits/memoryfwd.h \
+		/usr/include/c++/4.8/bits/ptr_traits.h \
+		/usr/include/c++/4.8/bits/allocator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h \
+		/usr/include/c++/4.8/ext/new_allocator.h \
+		/usr/include/c++/4.8/random \
+		/usr/include/c++/4.8/cmath \
+		/usr/include/c++/4.8/string \
+		/usr/include/c++/4.8/bits/stringfwd.h \
+		/usr/include/c++/4.8/bits/char_traits.h \
+		/usr/include/c++/4.8/bits/postypes.h \
+		/usr/include/c++/4.8/cwchar \
+		/usr/include/c++/4.8/cstdint \
+		/usr/include/c++/4.8/bits/localefwd.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h \
+		/usr/include/c++/4.8/clocale \
+		/usr/include/c++/4.8/iosfwd \
+		/usr/include/c++/4.8/cctype \
+		/usr/include/c++/4.8/bits/ostream_insert.h \
+		/usr/include/c++/4.8/bits/cxxabi_forced.h \
+		/usr/include/c++/4.8/bits/range_access.h \
+		/usr/include/c++/4.8/bits/basic_string.h \
+		/usr/include/c++/4.8/ext/atomicity.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h \
+		/usr/include/c++/4.8/ext/string_conversions.h \
+		/usr/include/c++/4.8/cerrno \
+		/usr/include/c++/4.8/bits/functional_hash.h \
+		/usr/include/c++/4.8/bits/basic_string.tcc \
+		/usr/include/c++/4.8/bits/random.h \
+		/usr/include/c++/4.8/vector \
+		/usr/include/c++/4.8/bits/stl_uninitialized.h \
+		/usr/include/c++/4.8/bits/stl_vector.h \
+		/usr/include/c++/4.8/bits/stl_bvector.h \
+		/usr/include/c++/4.8/bits/vector.tcc \
+		/usr/include/c++/4.8/debug/vector \
+		/usr/include/c++/4.8/debug/safe_sequence.h \
+		/usr/include/c++/4.8/debug/safe_base.h \
+		/usr/include/c++/4.8/ext/concurrence.h \
+		/usr/include/c++/4.8/debug/safe_sequence.tcc \
+		/usr/include/c++/4.8/debug/safe_iterator.h \
+		/usr/include/c++/4.8/debug/safe_iterator.tcc \
+		/usr/include/c++/4.8/profile/vector \
+		/usr/include/c++/4.8/profile/base.h \
+		/usr/include/c++/4.8/functional \
+		/usr/include/c++/4.8/tuple \
+		/usr/include/c++/4.8/array \
+		/usr/include/c++/4.8/stdexcept \
+		/usr/include/c++/4.8/debug/array \
+		/usr/include/c++/4.8/profile/array \
+		/usr/include/c++/4.8/bits/uses_allocator.h \
+		/usr/include/c++/4.8/profile/impl/profiler.h \
+		/usr/include/c++/4.8/profile/impl/profiler_hash_func.h \
+		/usr/include/c++/4.8/profile/impl/profiler_node.h \
+		/usr/include/c++/4.8/profile/impl/profiler_trace.h \
+		/usr/include/c++/4.8/unordered_map \
+		/usr/include/c++/4.8/bits/hashtable.h \
+		/usr/include/c++/4.8/bits/hashtable_policy.h \
+		/usr/include/c++/4.8/bits/unordered_map.h \
+		/usr/include/c++/4.8/debug/unordered_map \
+		/usr/include/c++/4.8/debug/safe_unordered_container.h \
+		/usr/include/c++/4.8/debug/safe_unordered_base.h \
+		/usr/include/c++/4.8/debug/safe_unordered_container.tcc \
+		/usr/include/c++/4.8/debug/safe_local_iterator.h \
+		/usr/include/c++/4.8/debug/safe_local_iterator.tcc \
+		/usr/include/c++/4.8/profile/unordered_map \
+		/usr/include/c++/4.8/profile/unordered_base.h \
+		/usr/include/c++/4.8/tr1/unordered_map \
+		/usr/include/c++/4.8/tr1/type_traits \
+		/usr/include/c++/4.8/tr1/functional_hash.h \
+		/usr/include/c++/4.8/tr1/hashtable.h \
+		/usr/include/c++/4.8/tr1/hashtable_policy.h \
+		/usr/include/c++/4.8/tr1/unordered_map.h \
+		/usr/include/c++/4.8/fstream \
+		/usr/include/c++/4.8/istream \
+		/usr/include/c++/4.8/ios \
+		/usr/include/c++/4.8/bits/ios_base.h \
+		/usr/include/c++/4.8/bits/locale_classes.h \
+		/usr/include/c++/4.8/bits/locale_classes.tcc \
+		/usr/include/c++/4.8/streambuf \
+		/usr/include/c++/4.8/bits/streambuf.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.h \
+		/usr/include/c++/4.8/bits/locale_facets.h \
+		/usr/include/c++/4.8/cwctype \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h \
+		/usr/include/c++/4.8/bits/streambuf_iterator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h \
+		/usr/include/c++/4.8/bits/locale_facets.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.tcc \
+		/usr/include/c++/4.8/ostream \
+		/usr/include/c++/4.8/bits/ostream.tcc \
+		/usr/include/c++/4.8/bits/istream.tcc \
+		/usr/include/c++/4.8/bits/codecvt.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
+		/usr/include/c++/4.8/bits/fstream.tcc \
+		/usr/include/c++/4.8/profile/impl/profiler_algos.h \
+		/usr/include/c++/4.8/profile/impl/profiler_state.h \
+		/usr/include/c++/4.8/profile/impl/profiler_hashtable_size.h \
+		/usr/include/c++/4.8/profile/impl/profiler_container_size.h \
+		/usr/include/c++/4.8/sstream \
+		/usr/include/c++/4.8/bits/sstream.tcc \
+		/usr/include/c++/4.8/profile/impl/profiler_map_to_unordered_map.h \
+		/usr/include/c++/4.8/profile/impl/profiler_vector_size.h \
+		/usr/include/c++/4.8/profile/impl/profiler_vector_to_list.h \
+		/usr/include/c++/4.8/profile/impl/profiler_list_to_slist.h \
+		/usr/include/c++/4.8/profile/impl/profiler_list_to_vector.h \
+		/usr/include/c++/4.8/profile/iterator_tracker.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/opt_random.h \
+		/usr/include/c++/4.8/bits/random.tcc \
+		/usr/include/c++/4.8/numeric \
+		/usr/include/c++/4.8/bits/stl_numeric.h \
+		/usr/include/c++/4.8/parallel/numeric \
+		/usr/include/c++/4.8/parallel/numericfwd.h \
+		/usr/include/c++/4.8/parallel/iterator.h \
+		/usr/include/c++/4.8/parallel/for_each.h \
+		/usr/include/c++/4.8/parallel/par_loop.h \
+		/usr/include/c++/4.8/parallel/omp_loop.h \
+		/usr/include/c++/4.8/parallel/workstealing.h \
+		/usr/include/c++/4.8/parallel/random_number.h \
+		/usr/include/c++/4.8/tr1/random \
+		/usr/include/c++/4.8/tr1/cmath \
+		/usr/include/c++/4.8/tr1/gamma.tcc \
+		/usr/include/c++/4.8/tr1/special_function_util.h \
+		/usr/include/c++/4.8/tr1/bessel_function.tcc \
+		/usr/include/c++/4.8/tr1/beta_function.tcc \
+		/usr/include/c++/4.8/tr1/ell_integral.tcc \
+		/usr/include/c++/4.8/tr1/exp_integral.tcc \
+		/usr/include/c++/4.8/tr1/hypergeometric.tcc \
+		/usr/include/c++/4.8/tr1/legendre_function.tcc \
+		/usr/include/c++/4.8/tr1/modified_bessel_func.tcc \
+		/usr/include/c++/4.8/tr1/poly_hermite.tcc \
+		/usr/include/c++/4.8/tr1/poly_laguerre.tcc \
+		/usr/include/c++/4.8/tr1/riemann_zeta.tcc \
+		/usr/include/c++/4.8/tr1/random.h \
+		/usr/include/c++/4.8/tr1/random.tcc \
+		/usr/include/c++/4.8/parallel/for_each_selectors.h \
+		/usr/include/c++/4.8/parallel/partial_sum.h \
+		/usr/include/c++/4.8/parallel/algorithm \
+		/usr/include/c++/4.8/parallel/algo.h \
+		/usr/include/c++/4.8/parallel/sort.h \
+		/usr/include/c++/4.8/parallel/checkers.h \
+		/usr/include/c++/4.8/parallel/multiway_mergesort.h \
+		/usr/include/c++/4.8/parallel/multiway_merge.h \
+		/usr/include/c++/4.8/parallel/losertree.h \
+		/usr/include/c++/4.8/parallel/multiseq_selection.h \
+		/usr/include/c++/4.8/queue \
+		/usr/include/c++/4.8/deque \
+		/usr/include/c++/4.8/bits/stl_deque.h \
+		/usr/include/c++/4.8/bits/deque.tcc \
+		/usr/include/c++/4.8/debug/deque \
+		/usr/include/c++/4.8/profile/deque \
+		/usr/include/c++/4.8/bits/stl_queue.h \
+		/usr/include/c++/4.8/parallel/quicksort.h \
+		/usr/include/c++/4.8/parallel/partition.h \
+		/usr/include/c++/4.8/parallel/balanced_quicksort.h \
+		/usr/include/c++/4.8/parallel/queue.h \
+		/usr/include/c++/4.8/parallel/omp_loop_static.h \
+		/usr/include/c++/4.8/parallel/search.h \
+		/usr/include/c++/4.8/parallel/random_shuffle.h \
+		/usr/include/c++/4.8/parallel/merge.h \
+		/usr/include/c++/4.8/parallel/unique_copy.h \
+		/usr/include/c++/4.8/parallel/set_operations.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/usr/include/c++/4.8/atomic \
+		/usr/include/c++/4.8/bits/atomic_base.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/usr/include/c++/4.8/iterator \
+		/usr/include/c++/4.8/bits/stream_iterator.h \
+		/usr/include/c++/4.8/list \
+		/usr/include/c++/4.8/bits/stl_list.h \
+		/usr/include/c++/4.8/bits/list.tcc \
+		/usr/include/c++/4.8/debug/list \
+		/usr/include/c++/4.8/profile/list \
+		../../Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/usr/include/c++/4.8/map \
+		/usr/include/c++/4.8/bits/stl_tree.h \
+		/usr/include/c++/4.8/bits/stl_map.h \
+		/usr/include/c++/4.8/bits/stl_multimap.h \
+		/usr/include/c++/4.8/debug/map \
+		/usr/include/c++/4.8/debug/map.h \
+		/usr/include/c++/4.8/debug/multimap.h \
+		/usr/include/c++/4.8/profile/map \
+		/usr/include/c++/4.8/profile/map.h \
+		/usr/include/c++/4.8/profile/multimap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qrect.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsize.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qpair.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qregion.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qline.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qimage.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qhash.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfont.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qevent.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qset.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qurl.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfile.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		form2.h
+	/home/tudyrusy/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/tudyrusy/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tudyrusy/rep/test1 -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/home/tudyrusy/Qt/5.5/gcc_64/include -I/home/tudyrusy/Qt/5.5/gcc_64/include/QtWidgets -I/home/tudyrusy/Qt/5.5/gcc_64/include/QtGui -I/home/tudyrusy/Qt/5.5/gcc_64/include/QtCore form2.h -o moc_form2.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_form2.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_form2.h
 ui_mainwindow.h: mainwindow.ui
 	/home/tudyrusy/Qt/5.5/gcc_64/bin/uic mainwindow.ui -o ui_mainwindow.h
+
+ui_form2.h: form2.ui
+	/home/tudyrusy/Qt/5.5/gcc_64/bin/uic form2.ui -o ui_form2.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1636,57 +1995,14 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../Qt/5.5/gcc_64/include/QtGui/qicon.h \
 		ui_mainwindow.h \
-		../../Qt/5.5/gcc_64/include/QtCore/QVariant \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QAction \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qaction.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QApplication \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
-		../../Qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
-		../../Qt/5.5/gcc_64/include/QtCore/qeventloop.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../Qt/5.5/gcc_64/include/QtGui/qguiapplication.h \
-		../../Qt/5.5/gcc_64/include/QtGui/qinputmethod.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QButtonGroup \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qheaderview.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qframe.h \
-		../../Qt/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../Qt/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../Qt/5.5/gcc_64/include/QtGui/qvalidator.h \
-		../../Qt/5.5/gcc_64/include/QtCore/qregularexpression.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qslider.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qstyle.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qtabbar.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qrubberband.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QLabel \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qlabel.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QLineEdit \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qlineedit.h \
-		../../Qt/5.5/gcc_64/include/QtGui/qtextcursor.h \
-		../../Qt/5.5/gcc_64/include/QtGui/qtextformat.h \
-		../../Qt/5.5/gcc_64/include/QtGui/qpen.h \
-		../../Qt/5.5/gcc_64/include/QtGui/qtextoption.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QMenuBar \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qmenubar.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qmenu.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QPushButton \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QStatusBar \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QToolBar \
-		../../Qt/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
-		../../Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		ugl.h \
-		dataclass.h
+		/usr/include/c++/4.8/iostream \
+		dataclass.h \
+		../../Qt/5.5/gcc_64/include/QtCore/QStringListModel \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringlistmodel.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		form2.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 dataclass.o: dataclass.cpp dataclass.h \
@@ -1886,41 +2202,48 @@ ft_encrypt.o: ft_encrypt.cpp /usr/include/c++/4.8/iostream \
 		/usr/include/c++/4.8/bits/istream.tcc
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ft_encrypt.o ft_encrypt.cpp
 
-ft_stuff.o: ft_stuff.cpp /usr/include/c++/4.8/iostream \
+ft_stuff.o: ft_stuff.cpp mainwindow.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/usr/include/c++/4.8/cstddef \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
-		/usr/include/c++/4.8/ostream \
-		/usr/include/c++/4.8/ios \
-		/usr/include/c++/4.8/iosfwd \
-		/usr/include/c++/4.8/bits/stringfwd.h \
-		/usr/include/c++/4.8/bits/memoryfwd.h \
-		/usr/include/c++/4.8/bits/postypes.h \
-		/usr/include/c++/4.8/cwchar \
-		/usr/include/c++/4.8/exception \
-		/usr/include/c++/4.8/bits/atomic_lockfree_defines.h \
-		/usr/include/c++/4.8/bits/exception_ptr.h \
-		/usr/include/c++/4.8/bits/exception_defines.h \
-		/usr/include/c++/4.8/bits/nested_exception.h \
-		/usr/include/c++/4.8/bits/c++0x_warning.h \
-		/usr/include/c++/4.8/bits/char_traits.h \
-		/usr/include/c++/4.8/bits/stl_algobase.h \
-		/usr/include/c++/4.8/bits/functexcept.h \
-		/usr/include/c++/4.8/bits/cpp_type_traits.h \
-		/usr/include/c++/4.8/ext/type_traits.h \
-		/usr/include/c++/4.8/ext/numeric_traits.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/usr/include/c++/4.8/utility \
+		/usr/include/c++/4.8/bits/stl_relops.h \
 		/usr/include/c++/4.8/bits/stl_pair.h \
 		/usr/include/c++/4.8/bits/move.h \
 		/usr/include/c++/4.8/bits/concept_check.h \
 		/usr/include/c++/4.8/bits/boost_concept_check.h \
 		/usr/include/c++/4.8/bits/stl_iterator_base_types.h \
 		/usr/include/c++/4.8/type_traits \
+		/usr/include/c++/4.8/bits/c++0x_warning.h \
+		/usr/include/c++/4.8/initializer_list \
+		/usr/include/c++/4.8/algorithm \
+		/usr/include/c++/4.8/bits/stl_algobase.h \
+		/usr/include/c++/4.8/bits/functexcept.h \
+		/usr/include/c++/4.8/bits/exception_defines.h \
+		/usr/include/c++/4.8/bits/cpp_type_traits.h \
+		/usr/include/c++/4.8/ext/type_traits.h \
+		/usr/include/c++/4.8/ext/numeric_traits.h \
 		/usr/include/c++/4.8/bits/stl_iterator_base_funcs.h \
 		/usr/include/c++/4.8/debug/debug.h \
 		/usr/include/c++/4.8/debug/macros.h \
 		/usr/include/c++/4.8/debug/functions.h \
 		/usr/include/c++/4.8/debug/formatter.h \
 		/usr/include/c++/4.8/typeinfo \
+		/usr/include/c++/4.8/exception \
+		/usr/include/c++/4.8/bits/atomic_lockfree_defines.h \
+		/usr/include/c++/4.8/bits/exception_ptr.h \
+		/usr/include/c++/4.8/bits/nested_exception.h \
 		/usr/include/c++/4.8/bits/hash_bytes.h \
 		/usr/include/c++/4.8/bits/stl_iterator.h \
 		/usr/include/c++/4.8/parallel/algobase.h \
@@ -1943,91 +2266,69 @@ ft_stuff.o: ft_stuff.cpp /usr/include/c++/4.8/iostream \
 		/usr/include/c++/4.8/parallel/compatibility.h \
 		/usr/include/c++/4.8/parallel/equally_split.h \
 		/usr/include/c++/4.8/parallel/find_selectors.h \
+		/usr/include/c++/4.8/bits/stl_algo.h \
+		/usr/include/c++/4.8/bits/algorithmfwd.h \
+		/usr/include/c++/4.8/bits/stl_heap.h \
+		/usr/include/c++/4.8/bits/stl_tempbuf.h \
+		/usr/include/c++/4.8/bits/stl_construct.h \
+		/usr/include/c++/4.8/new \
+		/usr/include/c++/4.8/ext/alloc_traits.h \
+		/usr/include/c++/4.8/bits/alloc_traits.h \
+		/usr/include/c++/4.8/bits/memoryfwd.h \
+		/usr/include/c++/4.8/bits/ptr_traits.h \
+		/usr/include/c++/4.8/bits/allocator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h \
+		/usr/include/c++/4.8/ext/new_allocator.h \
+		/usr/include/c++/4.8/random \
+		/usr/include/c++/4.8/cmath \
+		/usr/include/c++/4.8/string \
+		/usr/include/c++/4.8/bits/stringfwd.h \
+		/usr/include/c++/4.8/bits/char_traits.h \
+		/usr/include/c++/4.8/bits/postypes.h \
+		/usr/include/c++/4.8/cwchar \
 		/usr/include/c++/4.8/cstdint \
 		/usr/include/c++/4.8/bits/localefwd.h \
 		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h \
 		/usr/include/c++/4.8/clocale \
+		/usr/include/c++/4.8/iosfwd \
 		/usr/include/c++/4.8/cctype \
-		/usr/include/c++/4.8/bits/ios_base.h \
-		/usr/include/c++/4.8/ext/atomicity.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h \
-		/usr/include/c++/4.8/bits/locale_classes.h \
-		/usr/include/c++/4.8/string \
-		/usr/include/c++/4.8/bits/allocator.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h \
-		/usr/include/c++/4.8/ext/new_allocator.h \
-		/usr/include/c++/4.8/new \
 		/usr/include/c++/4.8/bits/ostream_insert.h \
 		/usr/include/c++/4.8/bits/cxxabi_forced.h \
 		/usr/include/c++/4.8/bits/range_access.h \
 		/usr/include/c++/4.8/bits/basic_string.h \
-		/usr/include/c++/4.8/initializer_list \
+		/usr/include/c++/4.8/ext/atomicity.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h \
 		/usr/include/c++/4.8/ext/string_conversions.h \
 		/usr/include/c++/4.8/cerrno \
 		/usr/include/c++/4.8/bits/functional_hash.h \
 		/usr/include/c++/4.8/bits/basic_string.tcc \
-		/usr/include/c++/4.8/bits/locale_classes.tcc \
-		/usr/include/c++/4.8/streambuf \
-		/usr/include/c++/4.8/bits/streambuf.tcc \
-		/usr/include/c++/4.8/bits/basic_ios.h \
-		/usr/include/c++/4.8/bits/locale_facets.h \
-		/usr/include/c++/4.8/cwctype \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h \
-		/usr/include/c++/4.8/bits/streambuf_iterator.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h \
-		/usr/include/c++/4.8/bits/locale_facets.tcc \
-		/usr/include/c++/4.8/bits/basic_ios.tcc \
-		/usr/include/c++/4.8/bits/ostream.tcc \
-		/usr/include/c++/4.8/istream \
-		/usr/include/c++/4.8/bits/istream.tcc \
-		/usr/include/c++/4.8/fstream \
-		/usr/include/c++/4.8/bits/codecvt.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
-		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
-		/usr/include/c++/4.8/bits/fstream.tcc \
-		ugl.h \
-		/usr/include/c++/4.8/map \
-		/usr/include/c++/4.8/bits/stl_tree.h \
-		/usr/include/c++/4.8/bits/alloc_traits.h \
-		/usr/include/c++/4.8/bits/ptr_traits.h \
-		/usr/include/c++/4.8/bits/stl_map.h \
-		/usr/include/c++/4.8/tuple \
-		/usr/include/c++/4.8/utility \
-		/usr/include/c++/4.8/bits/stl_relops.h \
-		/usr/include/c++/4.8/array \
-		/usr/include/c++/4.8/stdexcept \
-		/usr/include/c++/4.8/debug/array \
-		/usr/include/c++/4.8/debug/safe_sequence.h \
-		/usr/include/c++/4.8/debug/safe_base.h \
-		/usr/include/c++/4.8/ext/concurrence.h \
-		/usr/include/c++/4.8/debug/safe_sequence.tcc \
-		/usr/include/c++/4.8/profile/array \
-		/usr/include/c++/4.8/bits/uses_allocator.h \
-		/usr/include/c++/4.8/bits/stl_multimap.h \
-		/usr/include/c++/4.8/debug/map \
-		/usr/include/c++/4.8/debug/map.h \
-		/usr/include/c++/4.8/debug/safe_iterator.h \
-		/usr/include/c++/4.8/debug/safe_iterator.tcc \
-		/usr/include/c++/4.8/debug/multimap.h \
-		/usr/include/c++/4.8/profile/map \
-		/usr/include/c++/4.8/profile/map.h \
-		/usr/include/c++/4.8/profile/base.h \
-		/usr/include/c++/4.8/functional \
-		/usr/include/c++/4.8/profile/impl/profiler.h \
-		/usr/include/c++/4.8/profile/impl/profiler_hash_func.h \
-		/usr/include/c++/4.8/profile/impl/profiler_node.h \
+		/usr/include/c++/4.8/bits/random.h \
 		/usr/include/c++/4.8/vector \
-		/usr/include/c++/4.8/bits/stl_construct.h \
-		/usr/include/c++/4.8/ext/alloc_traits.h \
 		/usr/include/c++/4.8/bits/stl_uninitialized.h \
 		/usr/include/c++/4.8/bits/stl_vector.h \
 		/usr/include/c++/4.8/bits/stl_bvector.h \
 		/usr/include/c++/4.8/bits/vector.tcc \
 		/usr/include/c++/4.8/debug/vector \
+		/usr/include/c++/4.8/debug/safe_sequence.h \
+		/usr/include/c++/4.8/debug/safe_base.h \
+		/usr/include/c++/4.8/ext/concurrence.h \
+		/usr/include/c++/4.8/debug/safe_sequence.tcc \
+		/usr/include/c++/4.8/debug/safe_iterator.h \
+		/usr/include/c++/4.8/debug/safe_iterator.tcc \
 		/usr/include/c++/4.8/profile/vector \
-		/usr/include/c++/4.8/profile/iterator_tracker.h \
+		/usr/include/c++/4.8/profile/base.h \
+		/usr/include/c++/4.8/functional \
+		/usr/include/c++/4.8/tuple \
+		/usr/include/c++/4.8/array \
+		/usr/include/c++/4.8/stdexcept \
+		/usr/include/c++/4.8/debug/array \
+		/usr/include/c++/4.8/profile/array \
+		/usr/include/c++/4.8/bits/uses_allocator.h \
+		/usr/include/c++/4.8/profile/impl/profiler.h \
+		/usr/include/c++/4.8/profile/impl/profiler_hash_func.h \
+		/usr/include/c++/4.8/profile/impl/profiler_node.h \
 		/usr/include/c++/4.8/profile/impl/profiler_trace.h \
 		/usr/include/c++/4.8/unordered_map \
 		/usr/include/c++/4.8/bits/hashtable.h \
@@ -2047,6 +2348,29 @@ ft_stuff.o: ft_stuff.cpp /usr/include/c++/4.8/iostream \
 		/usr/include/c++/4.8/tr1/hashtable.h \
 		/usr/include/c++/4.8/tr1/hashtable_policy.h \
 		/usr/include/c++/4.8/tr1/unordered_map.h \
+		/usr/include/c++/4.8/fstream \
+		/usr/include/c++/4.8/istream \
+		/usr/include/c++/4.8/ios \
+		/usr/include/c++/4.8/bits/ios_base.h \
+		/usr/include/c++/4.8/bits/locale_classes.h \
+		/usr/include/c++/4.8/bits/locale_classes.tcc \
+		/usr/include/c++/4.8/streambuf \
+		/usr/include/c++/4.8/bits/streambuf.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.h \
+		/usr/include/c++/4.8/bits/locale_facets.h \
+		/usr/include/c++/4.8/cwctype \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h \
+		/usr/include/c++/4.8/bits/streambuf_iterator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h \
+		/usr/include/c++/4.8/bits/locale_facets.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.tcc \
+		/usr/include/c++/4.8/ostream \
+		/usr/include/c++/4.8/bits/ostream.tcc \
+		/usr/include/c++/4.8/bits/istream.tcc \
+		/usr/include/c++/4.8/bits/codecvt.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
+		/usr/include/c++/4.8/bits/fstream.tcc \
 		/usr/include/c++/4.8/profile/impl/profiler_algos.h \
 		/usr/include/c++/4.8/profile/impl/profiler_state.h \
 		/usr/include/c++/4.8/profile/impl/profiler_hashtable_size.h \
@@ -2058,11 +2382,537 @@ ft_stuff.o: ft_stuff.cpp /usr/include/c++/4.8/iostream \
 		/usr/include/c++/4.8/profile/impl/profiler_vector_to_list.h \
 		/usr/include/c++/4.8/profile/impl/profiler_list_to_slist.h \
 		/usr/include/c++/4.8/profile/impl/profiler_list_to_vector.h \
-		/usr/include/c++/4.8/profile/multimap.h
+		/usr/include/c++/4.8/profile/iterator_tracker.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/opt_random.h \
+		/usr/include/c++/4.8/bits/random.tcc \
+		/usr/include/c++/4.8/numeric \
+		/usr/include/c++/4.8/bits/stl_numeric.h \
+		/usr/include/c++/4.8/parallel/numeric \
+		/usr/include/c++/4.8/parallel/numericfwd.h \
+		/usr/include/c++/4.8/parallel/iterator.h \
+		/usr/include/c++/4.8/parallel/for_each.h \
+		/usr/include/c++/4.8/parallel/par_loop.h \
+		/usr/include/c++/4.8/parallel/omp_loop.h \
+		/usr/include/c++/4.8/parallel/workstealing.h \
+		/usr/include/c++/4.8/parallel/random_number.h \
+		/usr/include/c++/4.8/tr1/random \
+		/usr/include/c++/4.8/tr1/cmath \
+		/usr/include/c++/4.8/tr1/gamma.tcc \
+		/usr/include/c++/4.8/tr1/special_function_util.h \
+		/usr/include/c++/4.8/tr1/bessel_function.tcc \
+		/usr/include/c++/4.8/tr1/beta_function.tcc \
+		/usr/include/c++/4.8/tr1/ell_integral.tcc \
+		/usr/include/c++/4.8/tr1/exp_integral.tcc \
+		/usr/include/c++/4.8/tr1/hypergeometric.tcc \
+		/usr/include/c++/4.8/tr1/legendre_function.tcc \
+		/usr/include/c++/4.8/tr1/modified_bessel_func.tcc \
+		/usr/include/c++/4.8/tr1/poly_hermite.tcc \
+		/usr/include/c++/4.8/tr1/poly_laguerre.tcc \
+		/usr/include/c++/4.8/tr1/riemann_zeta.tcc \
+		/usr/include/c++/4.8/tr1/random.h \
+		/usr/include/c++/4.8/tr1/random.tcc \
+		/usr/include/c++/4.8/parallel/for_each_selectors.h \
+		/usr/include/c++/4.8/parallel/partial_sum.h \
+		/usr/include/c++/4.8/parallel/algorithm \
+		/usr/include/c++/4.8/parallel/algo.h \
+		/usr/include/c++/4.8/parallel/sort.h \
+		/usr/include/c++/4.8/parallel/checkers.h \
+		/usr/include/c++/4.8/parallel/multiway_mergesort.h \
+		/usr/include/c++/4.8/parallel/multiway_merge.h \
+		/usr/include/c++/4.8/parallel/losertree.h \
+		/usr/include/c++/4.8/parallel/multiseq_selection.h \
+		/usr/include/c++/4.8/queue \
+		/usr/include/c++/4.8/deque \
+		/usr/include/c++/4.8/bits/stl_deque.h \
+		/usr/include/c++/4.8/bits/deque.tcc \
+		/usr/include/c++/4.8/debug/deque \
+		/usr/include/c++/4.8/profile/deque \
+		/usr/include/c++/4.8/bits/stl_queue.h \
+		/usr/include/c++/4.8/parallel/quicksort.h \
+		/usr/include/c++/4.8/parallel/partition.h \
+		/usr/include/c++/4.8/parallel/balanced_quicksort.h \
+		/usr/include/c++/4.8/parallel/queue.h \
+		/usr/include/c++/4.8/parallel/omp_loop_static.h \
+		/usr/include/c++/4.8/parallel/search.h \
+		/usr/include/c++/4.8/parallel/random_shuffle.h \
+		/usr/include/c++/4.8/parallel/merge.h \
+		/usr/include/c++/4.8/parallel/unique_copy.h \
+		/usr/include/c++/4.8/parallel/set_operations.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/usr/include/c++/4.8/atomic \
+		/usr/include/c++/4.8/bits/atomic_base.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/usr/include/c++/4.8/iterator \
+		/usr/include/c++/4.8/bits/stream_iterator.h \
+		/usr/include/c++/4.8/list \
+		/usr/include/c++/4.8/bits/stl_list.h \
+		/usr/include/c++/4.8/bits/list.tcc \
+		/usr/include/c++/4.8/debug/list \
+		/usr/include/c++/4.8/profile/list \
+		../../Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/usr/include/c++/4.8/map \
+		/usr/include/c++/4.8/bits/stl_tree.h \
+		/usr/include/c++/4.8/bits/stl_map.h \
+		/usr/include/c++/4.8/bits/stl_multimap.h \
+		/usr/include/c++/4.8/debug/map \
+		/usr/include/c++/4.8/debug/map.h \
+		/usr/include/c++/4.8/debug/multimap.h \
+		/usr/include/c++/4.8/profile/map \
+		/usr/include/c++/4.8/profile/map.h \
+		/usr/include/c++/4.8/profile/multimap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qrect.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsize.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qpair.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qregion.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qline.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qimage.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qhash.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfont.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qevent.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qset.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qurl.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfile.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qicon.h \
+		ui_mainwindow.h \
+		/usr/include/c++/4.8/iostream \
+		ugl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ft_stuff.o ft_stuff.cpp
+
+form2.o: form2.cpp form2.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/QWidget \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/usr/include/c++/4.8/cstddef \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/usr/include/c++/4.8/utility \
+		/usr/include/c++/4.8/bits/stl_relops.h \
+		/usr/include/c++/4.8/bits/stl_pair.h \
+		/usr/include/c++/4.8/bits/move.h \
+		/usr/include/c++/4.8/bits/concept_check.h \
+		/usr/include/c++/4.8/bits/boost_concept_check.h \
+		/usr/include/c++/4.8/bits/stl_iterator_base_types.h \
+		/usr/include/c++/4.8/type_traits \
+		/usr/include/c++/4.8/bits/c++0x_warning.h \
+		/usr/include/c++/4.8/initializer_list \
+		/usr/include/c++/4.8/algorithm \
+		/usr/include/c++/4.8/bits/stl_algobase.h \
+		/usr/include/c++/4.8/bits/functexcept.h \
+		/usr/include/c++/4.8/bits/exception_defines.h \
+		/usr/include/c++/4.8/bits/cpp_type_traits.h \
+		/usr/include/c++/4.8/ext/type_traits.h \
+		/usr/include/c++/4.8/ext/numeric_traits.h \
+		/usr/include/c++/4.8/bits/stl_iterator_base_funcs.h \
+		/usr/include/c++/4.8/debug/debug.h \
+		/usr/include/c++/4.8/debug/macros.h \
+		/usr/include/c++/4.8/debug/functions.h \
+		/usr/include/c++/4.8/debug/formatter.h \
+		/usr/include/c++/4.8/typeinfo \
+		/usr/include/c++/4.8/exception \
+		/usr/include/c++/4.8/bits/atomic_lockfree_defines.h \
+		/usr/include/c++/4.8/bits/exception_ptr.h \
+		/usr/include/c++/4.8/bits/nested_exception.h \
+		/usr/include/c++/4.8/bits/hash_bytes.h \
+		/usr/include/c++/4.8/bits/stl_iterator.h \
+		/usr/include/c++/4.8/parallel/algobase.h \
+		/usr/include/c++/4.8/parallel/base.h \
+		/usr/include/c++/4.8/bits/stl_function.h \
+		/usr/include/c++/4.8/backward/binders.h \
+		/usr/include/c++/4.8/parallel/features.h \
+		/usr/include/c++/4.8/parallel/basic_iterator.h \
+		/usr/include/c++/4.8/parallel/parallel.h \
+		/usr/include/c++/4.8/parallel/compiletime_settings.h \
+		/usr/include/c++/4.8/cstdio \
+		/usr/include/c++/4.8/parallel/types.h \
+		/usr/include/c++/4.8/cstdlib \
+		/usr/include/c++/4.8/limits \
+		/usr/include/c++/4.8/tr1/cstdint \
+		/usr/include/c++/4.8/parallel/tags.h \
+		/usr/include/c++/4.8/parallel/settings.h \
+		/usr/include/c++/4.8/parallel/algorithmfwd.h \
+		/usr/include/c++/4.8/parallel/find.h \
+		/usr/include/c++/4.8/parallel/compatibility.h \
+		/usr/include/c++/4.8/parallel/equally_split.h \
+		/usr/include/c++/4.8/parallel/find_selectors.h \
+		/usr/include/c++/4.8/bits/stl_algo.h \
+		/usr/include/c++/4.8/bits/algorithmfwd.h \
+		/usr/include/c++/4.8/bits/stl_heap.h \
+		/usr/include/c++/4.8/bits/stl_tempbuf.h \
+		/usr/include/c++/4.8/bits/stl_construct.h \
+		/usr/include/c++/4.8/new \
+		/usr/include/c++/4.8/ext/alloc_traits.h \
+		/usr/include/c++/4.8/bits/alloc_traits.h \
+		/usr/include/c++/4.8/bits/memoryfwd.h \
+		/usr/include/c++/4.8/bits/ptr_traits.h \
+		/usr/include/c++/4.8/bits/allocator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h \
+		/usr/include/c++/4.8/ext/new_allocator.h \
+		/usr/include/c++/4.8/random \
+		/usr/include/c++/4.8/cmath \
+		/usr/include/c++/4.8/string \
+		/usr/include/c++/4.8/bits/stringfwd.h \
+		/usr/include/c++/4.8/bits/char_traits.h \
+		/usr/include/c++/4.8/bits/postypes.h \
+		/usr/include/c++/4.8/cwchar \
+		/usr/include/c++/4.8/cstdint \
+		/usr/include/c++/4.8/bits/localefwd.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h \
+		/usr/include/c++/4.8/clocale \
+		/usr/include/c++/4.8/iosfwd \
+		/usr/include/c++/4.8/cctype \
+		/usr/include/c++/4.8/bits/ostream_insert.h \
+		/usr/include/c++/4.8/bits/cxxabi_forced.h \
+		/usr/include/c++/4.8/bits/range_access.h \
+		/usr/include/c++/4.8/bits/basic_string.h \
+		/usr/include/c++/4.8/ext/atomicity.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h \
+		/usr/include/c++/4.8/ext/string_conversions.h \
+		/usr/include/c++/4.8/cerrno \
+		/usr/include/c++/4.8/bits/functional_hash.h \
+		/usr/include/c++/4.8/bits/basic_string.tcc \
+		/usr/include/c++/4.8/bits/random.h \
+		/usr/include/c++/4.8/vector \
+		/usr/include/c++/4.8/bits/stl_uninitialized.h \
+		/usr/include/c++/4.8/bits/stl_vector.h \
+		/usr/include/c++/4.8/bits/stl_bvector.h \
+		/usr/include/c++/4.8/bits/vector.tcc \
+		/usr/include/c++/4.8/debug/vector \
+		/usr/include/c++/4.8/debug/safe_sequence.h \
+		/usr/include/c++/4.8/debug/safe_base.h \
+		/usr/include/c++/4.8/ext/concurrence.h \
+		/usr/include/c++/4.8/debug/safe_sequence.tcc \
+		/usr/include/c++/4.8/debug/safe_iterator.h \
+		/usr/include/c++/4.8/debug/safe_iterator.tcc \
+		/usr/include/c++/4.8/profile/vector \
+		/usr/include/c++/4.8/profile/base.h \
+		/usr/include/c++/4.8/functional \
+		/usr/include/c++/4.8/tuple \
+		/usr/include/c++/4.8/array \
+		/usr/include/c++/4.8/stdexcept \
+		/usr/include/c++/4.8/debug/array \
+		/usr/include/c++/4.8/profile/array \
+		/usr/include/c++/4.8/bits/uses_allocator.h \
+		/usr/include/c++/4.8/profile/impl/profiler.h \
+		/usr/include/c++/4.8/profile/impl/profiler_hash_func.h \
+		/usr/include/c++/4.8/profile/impl/profiler_node.h \
+		/usr/include/c++/4.8/profile/impl/profiler_trace.h \
+		/usr/include/c++/4.8/unordered_map \
+		/usr/include/c++/4.8/bits/hashtable.h \
+		/usr/include/c++/4.8/bits/hashtable_policy.h \
+		/usr/include/c++/4.8/bits/unordered_map.h \
+		/usr/include/c++/4.8/debug/unordered_map \
+		/usr/include/c++/4.8/debug/safe_unordered_container.h \
+		/usr/include/c++/4.8/debug/safe_unordered_base.h \
+		/usr/include/c++/4.8/debug/safe_unordered_container.tcc \
+		/usr/include/c++/4.8/debug/safe_local_iterator.h \
+		/usr/include/c++/4.8/debug/safe_local_iterator.tcc \
+		/usr/include/c++/4.8/profile/unordered_map \
+		/usr/include/c++/4.8/profile/unordered_base.h \
+		/usr/include/c++/4.8/tr1/unordered_map \
+		/usr/include/c++/4.8/tr1/type_traits \
+		/usr/include/c++/4.8/tr1/functional_hash.h \
+		/usr/include/c++/4.8/tr1/hashtable.h \
+		/usr/include/c++/4.8/tr1/hashtable_policy.h \
+		/usr/include/c++/4.8/tr1/unordered_map.h \
+		/usr/include/c++/4.8/fstream \
+		/usr/include/c++/4.8/istream \
+		/usr/include/c++/4.8/ios \
+		/usr/include/c++/4.8/bits/ios_base.h \
+		/usr/include/c++/4.8/bits/locale_classes.h \
+		/usr/include/c++/4.8/bits/locale_classes.tcc \
+		/usr/include/c++/4.8/streambuf \
+		/usr/include/c++/4.8/bits/streambuf.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.h \
+		/usr/include/c++/4.8/bits/locale_facets.h \
+		/usr/include/c++/4.8/cwctype \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h \
+		/usr/include/c++/4.8/bits/streambuf_iterator.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h \
+		/usr/include/c++/4.8/bits/locale_facets.tcc \
+		/usr/include/c++/4.8/bits/basic_ios.tcc \
+		/usr/include/c++/4.8/ostream \
+		/usr/include/c++/4.8/bits/ostream.tcc \
+		/usr/include/c++/4.8/bits/istream.tcc \
+		/usr/include/c++/4.8/bits/codecvt.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
+		/usr/include/c++/4.8/bits/fstream.tcc \
+		/usr/include/c++/4.8/profile/impl/profiler_algos.h \
+		/usr/include/c++/4.8/profile/impl/profiler_state.h \
+		/usr/include/c++/4.8/profile/impl/profiler_hashtable_size.h \
+		/usr/include/c++/4.8/profile/impl/profiler_container_size.h \
+		/usr/include/c++/4.8/sstream \
+		/usr/include/c++/4.8/bits/sstream.tcc \
+		/usr/include/c++/4.8/profile/impl/profiler_map_to_unordered_map.h \
+		/usr/include/c++/4.8/profile/impl/profiler_vector_size.h \
+		/usr/include/c++/4.8/profile/impl/profiler_vector_to_list.h \
+		/usr/include/c++/4.8/profile/impl/profiler_list_to_slist.h \
+		/usr/include/c++/4.8/profile/impl/profiler_list_to_vector.h \
+		/usr/include/c++/4.8/profile/iterator_tracker.h \
+		/usr/include/x86_64-linux-gnu/c++/4.8/bits/opt_random.h \
+		/usr/include/c++/4.8/bits/random.tcc \
+		/usr/include/c++/4.8/numeric \
+		/usr/include/c++/4.8/bits/stl_numeric.h \
+		/usr/include/c++/4.8/parallel/numeric \
+		/usr/include/c++/4.8/parallel/numericfwd.h \
+		/usr/include/c++/4.8/parallel/iterator.h \
+		/usr/include/c++/4.8/parallel/for_each.h \
+		/usr/include/c++/4.8/parallel/par_loop.h \
+		/usr/include/c++/4.8/parallel/omp_loop.h \
+		/usr/include/c++/4.8/parallel/workstealing.h \
+		/usr/include/c++/4.8/parallel/random_number.h \
+		/usr/include/c++/4.8/tr1/random \
+		/usr/include/c++/4.8/tr1/cmath \
+		/usr/include/c++/4.8/tr1/gamma.tcc \
+		/usr/include/c++/4.8/tr1/special_function_util.h \
+		/usr/include/c++/4.8/tr1/bessel_function.tcc \
+		/usr/include/c++/4.8/tr1/beta_function.tcc \
+		/usr/include/c++/4.8/tr1/ell_integral.tcc \
+		/usr/include/c++/4.8/tr1/exp_integral.tcc \
+		/usr/include/c++/4.8/tr1/hypergeometric.tcc \
+		/usr/include/c++/4.8/tr1/legendre_function.tcc \
+		/usr/include/c++/4.8/tr1/modified_bessel_func.tcc \
+		/usr/include/c++/4.8/tr1/poly_hermite.tcc \
+		/usr/include/c++/4.8/tr1/poly_laguerre.tcc \
+		/usr/include/c++/4.8/tr1/riemann_zeta.tcc \
+		/usr/include/c++/4.8/tr1/random.h \
+		/usr/include/c++/4.8/tr1/random.tcc \
+		/usr/include/c++/4.8/parallel/for_each_selectors.h \
+		/usr/include/c++/4.8/parallel/partial_sum.h \
+		/usr/include/c++/4.8/parallel/algorithm \
+		/usr/include/c++/4.8/parallel/algo.h \
+		/usr/include/c++/4.8/parallel/sort.h \
+		/usr/include/c++/4.8/parallel/checkers.h \
+		/usr/include/c++/4.8/parallel/multiway_mergesort.h \
+		/usr/include/c++/4.8/parallel/multiway_merge.h \
+		/usr/include/c++/4.8/parallel/losertree.h \
+		/usr/include/c++/4.8/parallel/multiseq_selection.h \
+		/usr/include/c++/4.8/queue \
+		/usr/include/c++/4.8/deque \
+		/usr/include/c++/4.8/bits/stl_deque.h \
+		/usr/include/c++/4.8/bits/deque.tcc \
+		/usr/include/c++/4.8/debug/deque \
+		/usr/include/c++/4.8/profile/deque \
+		/usr/include/c++/4.8/bits/stl_queue.h \
+		/usr/include/c++/4.8/parallel/quicksort.h \
+		/usr/include/c++/4.8/parallel/partition.h \
+		/usr/include/c++/4.8/parallel/balanced_quicksort.h \
+		/usr/include/c++/4.8/parallel/queue.h \
+		/usr/include/c++/4.8/parallel/omp_loop_static.h \
+		/usr/include/c++/4.8/parallel/search.h \
+		/usr/include/c++/4.8/parallel/random_shuffle.h \
+		/usr/include/c++/4.8/parallel/merge.h \
+		/usr/include/c++/4.8/parallel/unique_copy.h \
+		/usr/include/c++/4.8/parallel/set_operations.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/usr/include/c++/4.8/atomic \
+		/usr/include/c++/4.8/bits/atomic_base.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/usr/include/c++/4.8/iterator \
+		/usr/include/c++/4.8/bits/stream_iterator.h \
+		/usr/include/c++/4.8/list \
+		/usr/include/c++/4.8/bits/stl_list.h \
+		/usr/include/c++/4.8/bits/list.tcc \
+		/usr/include/c++/4.8/debug/list \
+		/usr/include/c++/4.8/profile/list \
+		../../Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/usr/include/c++/4.8/map \
+		/usr/include/c++/4.8/bits/stl_tree.h \
+		/usr/include/c++/4.8/bits/stl_map.h \
+		/usr/include/c++/4.8/bits/stl_multimap.h \
+		/usr/include/c++/4.8/debug/map \
+		/usr/include/c++/4.8/debug/map.h \
+		/usr/include/c++/4.8/debug/multimap.h \
+		/usr/include/c++/4.8/profile/map \
+		/usr/include/c++/4.8/profile/map.h \
+		/usr/include/c++/4.8/profile/multimap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qrect.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsize.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qpair.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qregion.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qline.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qimage.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qhash.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfont.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qevent.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qmap.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qset.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qurl.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfile.h \
+		../../Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		ui_form2.h \
+		ugl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o form2.o form2.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_form2.o: moc_form2.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_form2.o moc_form2.cpp
 
 ####### Install
 

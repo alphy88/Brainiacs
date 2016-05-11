@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "form2.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,10 +21,9 @@ private slots:
 
     void on_print_clicked();
 
-    void on_Add_clicked();
-
 private:
     Ui::MainWindow *ui;
+    Form2 *form;
 };
 
 #endif // MAINWINDOW_H
