@@ -7,11 +7,12 @@
 #include "dataclass.h"
 #include  <QStringListModel>
 #include "form2.h"
+#include "qsshsocket.h"
 
 extern map <string, string> m;
 extern sqlite3 *db;
 QStringListModel *model;
-
+  QSshSocket  qsshsocket;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -31,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
       }
       model = new QStringListModel(this);
       model->insertColumn(0);
+
+      connect(&qsshsocket, SIGNAL(connected()), this, SLOT(isConnected()) );
 }
 
 MainWindow::~MainWindow()
@@ -39,20 +42,28 @@ MainWindow::~MainWindow()
     sqlite3_close(db);
     cout << "db saved" << endl;
 }
-
+void MainWindow::isConnected()
+{
+std::cout << "is connected" ;
+}
 
 void MainWindow::on_pushButton_clicked()
 {
-  //  std::cout << ui->username->text().toStdString() << ui->password->text().toStdString();
+  //std::cout << ui->username->text().toStdString() << ui->password->text().toStdString();
     string user = ui->username->text().toStdString();
     string pass = ui->password->text().toStdString();
 
-    if (ft_search(user, pass))
+    /*if (ft_search(user, pass))
     {
         form = new Form2(this);
         form->show();
         this->setCentralWidget(form);
-    }
+    }*/
+
+    qsshsocket.connectToHost("10.230.2.29");
+    qsshsocket.login(user.c_str(),pass.c_str());
+    qsshsocket.start();
+  //  qsshsocket.run();
 }
 
 void MainWindow::on_print_clicked()

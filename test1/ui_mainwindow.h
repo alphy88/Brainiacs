@@ -48,12 +48,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(218, 293);
+        MainWindow->resize(326, 299);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         LoginWidget = new QWidget(centralWidget);
         LoginWidget->setObjectName(QStringLiteral("LoginWidget"));
-        LoginWidget->setGeometry(QRect(20, 10, 171, 201));
+        LoginWidget->setGeometry(QRect(20, 30, 171, 201));
         formLayout = new QFormLayout(LoginWidget);
         formLayout->setSpacing(6);
         formLayout->setContentsMargins(11, 11, 11, 11);
@@ -92,7 +92,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 218, 25));
+        menuBar->setGeometry(QRect(0, 0, 326, 25));
         menuLog_in = new QMenu(menuBar);
         menuLog_in->setObjectName(QStringLiteral("menuLog_in"));
         MainWindow->setMenuBar(menuBar);

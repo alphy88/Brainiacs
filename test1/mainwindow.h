@@ -20,6 +20,7 @@ private slots:
     void on_pushButton_clicked();
 
     void on_print_clicked();
+    void isConnected();
 
 private:
     Ui::MainWindow *ui;

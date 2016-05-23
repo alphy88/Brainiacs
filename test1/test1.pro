@@ -7,6 +7,7 @@
 QT       += core gui
 DEFINES += __STDC_FORMAT_MACROS
 
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = test1
@@ -22,20 +23,23 @@ SOURCES += main.cpp\
     dataclass.cpp \
     ft_encrypt.cpp \
     ft_stuff.cpp \
-    form2.cpp
+    form2.cpp \
+    ssh1.cpp
 
 INCLUDEPATH += /usr/include/c++/4.8/
 INCLUDEPATH += /usr/include/x86_64-linux-gnu/c++/4.8/
 QMAKE_CXXFLAGS += -std=c++0x
 LIBS += -L/opt/local/lib \
-        -lsqlite3
+        -lsqlite3 \
+        -lssh
 CONFIG += c++11
 
 HEADERS  += mainwindow.h \
     dataclass.h \
     ugl.h \
     modelviewdialog.h \
-    form2.h
+    form2.h \
+    qsshsocket.h
 
 FORMS    += mainwindow.ui \
     form2.ui
